@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Вхід | QuizSystem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/quartz/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="auth-screen">
+  <div class="auth-card">
+    <div class="text-center mb-3">
+      <i class="bi bi-mortarboard-fill fs-2 text-warning"></i>
+      <h3 class="fw-bold mt-1 text-white mb-0">Quiz<span class="text-warning">System</span></h3>
+      <p class="text-white-50 small mb-0">Вхід у персональний кабінет</p>
+    </div>
+
+    <% if (error) { %>
+      <div class="alert alert-danger py-1 px-2 small rounded-3 mb-2 text-center"><%= error %></div>
+    <% } %>
+
+    <form action="/login" method="POST">
+      <div class="mb-2">
+        <label class="form-label small text-white-50 mb-1">Логін</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-person"></i></span>
+          <input type="text" name="username" class="form-control py-2"  required autocomplete="off">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label small text-white-50 mb-1">Пароль</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-lock"></i></span>
+          <input type="password" name="password" class="form-control py-2" placeholder="••••••••" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-auth w-100 py-2 mt-1">
+        Увійти <i class="bi bi-arrow-right ms-1"></i>
+      </button>
+    </form>
+
+    <div class="text-center mt-3 pt-2 border-top border-white-10">
+      <span class="text-white-50 small">Немає облікового запису?</span> 
+      <a href="/register" class="text-warning text-decoration-none small fw-semibold ms-1">Зареєструватися</a>
+    </div>
+  </div>
+</body>
+</html>

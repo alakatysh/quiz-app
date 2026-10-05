@@ -1,0 +1,36 @@
+<%- include('../partials/header') %>
+
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4">
+        <h3 class="mb-4">Створення нового тесту</h3>
+        
+        <form action="/teacher/tests/create" method="POST">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Назва тесту</label>
+            <input type="text" name="title" class="form-control" placeholder="напр., Основи JavaScript" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Опис тесту</label>
+            <textarea name="description" class="form-control" rows="3" placeholder="Короткий опис для студентів..."></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label">Ліміт часу (у хвилинах)</label>
+            <input type="number" name="timeLimit" class="form-control" value="0" min="0">
+            <div class="form-text">Вкажіть 0, якщо тест не повинен мати обмеження за часом.</div>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <a href="/teacher/dashboard" class="btn btn-secondary">Скасувати</a>
+            <button type="submit" class="btn btn-primary">Створити та перейти до питань</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

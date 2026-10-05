@@ -1,0 +1,225 @@
+/* Базові стилі */
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  min-height: 100vh;
+  background: radial-gradient(circle at 10% 20%, rgba(91, 37, 125, 0.5) 0%, rgba(18, 14, 33, 1) 90%);
+  background-attachment: fixed;
+  color: #f1f5f9;
+}
+
+.bg-white, .card-footer, .card-header {
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Екран авторизації */
+body.auth-screen {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.auth-card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 18px;
+  padding: 1.25rem 1.8rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-card .form-control,
+.auth-card .form-select {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+.auth-card .input-group-text {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-right: none;
+  color: rgba(255, 255, 255, 0.6);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+.auth-card .input-group .form-control {
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.auth-card .form-control:focus,
+.auth-card .form-select:focus {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(251, 191, 36, 0.6);
+  box-shadow: 0 0 0 0.2rem rgba(251, 191, 36, 0.2);
+  color: #fff;
+}
+
+.auth-card .form-select option {
+  background-color: #211a36;
+  color: #fff;
+}
+
+.auth-card .form-label {
+  margin-bottom: 2px;
+  font-size: 0.8rem;
+}
+
+/* Навігація */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.user-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+}
+
+/* Кнопки та бейджі */
+.badge-role-orange {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+  color: #1a1100 !important;
+  font-weight: 700;
+  font-size: 0.8rem;
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.45);
+}
+
+.btn-auth,
+.btn-create-test,
+.btn-export-csv {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+  border: none !important;
+  color: #1a1100 !important;
+  border-radius: 12px;
+  font-weight: 700;
+  padding: 10px 18px;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+  transition: all 0.2s ease;
+}
+
+.btn-auth:hover,
+.btn-create-test:hover,
+.btn-export-csv:hover {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  color: #000000 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.55);
+}
+
+.btn-start-test {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #fff !important;
+  border-radius: 12px;
+  font-weight: 600;
+  padding: 10px 16px;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.btn-start-test:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  transform: translateY(-2px);
+  color: #fff !important;
+}
+
+.btn-disabled-glass {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #94a3b8 !important;
+  border-radius: 12px;
+  padding: 10px 16px;
+}
+
+/* Картки */
+.card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.row .card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Прозорі таблиці */
+.glass-table-container,
+.student-table-wrap {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.glass-table,
+.student-table-wrap table {
+  background: transparent !important;
+  color: #f1f5f9 !important;
+  margin-bottom: 0;
+}
+
+.glass-table th,
+.student-table-wrap th {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.glass-table td,
+.student-table-wrap td {
+  background: transparent !important;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  color: #e2e8f0 !important;
+}
+
+.badge-glass {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50px;
+  padding: 6px 14px;
+}
+
+/* Огляд відповідей */
+.review-card-correct {
+  border-left: 5px solid #10b981 !important;
+  background: rgba(16, 185, 129, 0.08) !important;
+}
+
+.review-card-wrong {
+  border-left: 5px solid #ef4444 !important;
+  background: rgba(239, 68, 68, 0.08) !important;
+}

@@ -1,0 +1,62 @@
+<%- include('../partials/header') %>
+
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+  <div>
+    <a href="/teacher/dashboard" class="btn btn-sm btn-outline-light rounded-pill mb-2">
+      <i class="bi bi-arrow-left"></i> Назад до тестів
+    </a>
+    <h2 class="fw-bold mb-0">Журнал успішності студентів</h2>
+  </div>
+  <% if (results.length > 0) { %>
+    <a href="/teacher/stats/export" class="btn btn-export-csv">
+      <i class="bi bi-file-earmark-spreadsheet me-2"></i> Завантажити звіт (CSV / Excel)
+    </a>
+  <% } %>
+</div>
+
+<% if (results.length === 0) { %>
+  <div class="alert alert-info border-0 rounded-4 text-center p-4">
+    <i class="bi bi-info-circle fs-3 d-block mb-2"></i>
+    Ще жоден студент не завершив тестування.
+  </div>
+<% } else { %>
+  <div class="glass-table-container shadow">
+    <div class="table-responsive">
+      <table class="table glass-table align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Студент (ПІБ)</th>
+            <th>Логін</th>
+            <th>Назва тесту</th>
+            <th>Оцінка</th>
+            <th>Успішність</th>
+            <th>Дата складання</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% results.forEach((r, index) => { %>
+            <tr>
+              <td class="text-white-50"><%= index + 1 %></td>
+              <td><strong class="text-white"><%= r.student ? r.student.fullName : 'Видалений користувач' %></strong></td>
+              <td class="text-white-50"><%= r.student ? r.student.username : '-' %></td>
+              <td><%= r.test ? r.test.title : 'Видалений тест' %></td>
+              <td>
+                <span class="badge badge-glass fs-6"><%= r.score %> / <%= r.maxScore %></span>
+              </td>
+              <td>
+                <% const percent = Math.round((r.score / r.maxScore) * 100); %>
+                <span class="badge badge-glass">
+                  <%= percent %>%
+                </span>
+              </td>
+              <td class="small text-white-50"><%= new Date(r.completedAt).toLocaleString('uk-UA') %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% } %>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,85 @@
+<%- include('../partials/header') %>
+
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2><%= test.title %></h2>
+      <% if (test.timeLimit > 0) { %>
+        <div class="alert alert-warning py-1 px-3 mb-0 fw-bold fs-5" id="timerBadge">
+          ⏱ Час: <span id="timerText">--:--</span>
+        </div>
+      <% } %>
+    </div>
+
+    <form id="quizForm" action="/student/test/<%= test._id %>/submit" method="POST">
+      <% test.questions.forEach((q, index) => { %>
+        <div class="card shadow-sm border-0 mb-4">
+          <div class="card-header bg-white fw-bold d-flex justify-content-between">
+            <span>Питання <%= index + 1 %></span>
+            <span class="badge bg-light text-dark"><%= q.points %> бал(и)</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title mb-3"><%= q.questionText %></h5>
+
+            <!-- 1. Одиночний вибір (Radio) -->
+            <% if (q.type === 'single') { %>
+              <% q.options.forEach((opt, optIndex) => { %>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="q_<%= q._id %>" id="q_<%= q._id %>_<%= optIndex %>" value="<%= opt %>">
+                  <label class="form-check-label" for="q_<%= q._id %>_<%= optIndex %>"><%= opt %></label>
+                </div>
+              <% }) %>
+            <% } %>
+
+            <!-- 2. Множинний вибір (Checkbox) -->
+            <% if (q.type === 'multiple') { %>
+              <div class="text-muted small mb-2">Оберіть усі правильні відповіді:</div>
+              <% q.options.forEach((opt, optIndex) => { %>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" name="q_<%= q._id %>" id="q_<%= q._id %>_<%= optIndex %>" value="<%= opt %>">
+                  <label class="form-check-label" for="q_<%= q._id %>_<%= optIndex %>"><%= opt %></label>
+                </div>
+              <% }) %>
+            <% } %>
+
+            <!-- 3. Текстове поле (Text) -->
+            <% if (q.type === 'text') { %>
+              <div class="mt-2">
+                <input type="text" name="q_<%= q._id %>" class="form-control" placeholder="Введіть вашу відповідь тут...">
+              </div>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+
+      <div class="text-end mb-5">
+        <button type="submit" class="btn btn-primary btn-lg px-5" onclick="return confirm('Завершити тестування і відправити відповіді?');">
+          Завершити тест
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Логіка зворотного відліку часу -->
+<% if (test.timeLimit > 0) { %>
+<script>
+let totalSeconds = Number("<%= test.timeLimit %>") * 60;  const timerText = document.getElementById('timerText');
+  const quizForm = document.getElementById('quizForm');
+
+  const countdown = setInterval(() => {
+    totalSeconds--;
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    timerText.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+    if (totalSeconds <= 0) {
+      clearInterval(countdown);
+      alert('Час на проходження тесту вичерпано! Відповіді зберігаються автоматично.');
+      quizForm.submit();
+    }
+  }, 1000);
+</script>
+<% } %>
+
+<%- include('../partials/footer') %>

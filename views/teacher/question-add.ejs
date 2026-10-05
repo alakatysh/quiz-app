@@ -1,0 +1,119 @@
+<%- include('../partials/header') %>
+
+<div class="mb-3">
+  <a href="/teacher/dashboard" class="text-decoration-none">&larr; Повернутися до списку тестів</a>
+  <h2 class="mt-2"><%= test.title %> <span class="text-muted fs-5">(Управління питаннями)</span></h2>
+</div>
+
+<div class="row">
+  <!-- Ліва колонка: Форма додавання нового питання -->
+  <div class="col-md-5 mb-4">
+    <div class="card shadow-sm border-0 sticky-top" style="top: 20px;">
+      <div class="card-body p-3">
+        <h5 class="card-title mb-3">Додати нове запитання</h5>
+
+        <form action="/teacher/tests/<%= test._id %>/questions" method="POST">
+          <div class="mb-3">
+            <label class="form-label">Текст запитання:</label>
+            <input type="text" name="questionText" class="form-control" required placeholder="Введіть суть питання">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Тип запитання:</label>
+            <select name="type" id="questionTypeSelect" class="form-select" onchange="switchQuestionType(this.value)">
+              <option value="single">Одиночний вибір (1 правильна відповідь)</option>
+              <option value="multiple">Множинний вибір (декілька правильних)</option>
+              <option value="text">Введення тексту (студент пише відповідь сам)</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Кількість балів:</label>
+            <input type="number" name="points" class="form-control" value="1" min="1" required>
+          </div>
+
+          <!-- Варіанти для single та multiple -->
+          <div id="optionsBlock">
+            <label class="form-label">Варіанти відповідей (по одному в кожному полі):</label>
+            <input type="text" name="option1" class="form-control mb-1" placeholder="Варіант 1">
+            <input type="text" name="option2" class="form-control mb-1" placeholder="Варіант 2">
+            <input type="text" name="option3" class="form-control mb-1" placeholder="Варіант 3">
+            <input type="text" name="option4" class="form-control mb-2" placeholder="Варіант 4">
+
+            <label class="form-label fw-bold">Правильна відповідь / відповіді:</label>
+            <input type="text" name="choiceCorrect" class="form-control" placeholder="Точний текст правильного варіанта (або через кому)">
+            <div class="form-text">Якщо варіантів кілька, перерахуйте їх точно через кому: <code>Варіант 1, Варіант 2</code></div>
+          </div>
+
+          <!-- Варіант для відкритого тексту -->
+          <div id="textBlock" style="display: none;">
+            <label class="form-label fw-bold">Еталонне слово/число:</label>
+            <input type="text" name="textCorrect" class="form-control" placeholder="Правильне слово або відповідь">
+            <div class="form-text">Регістр літер (великі/малі) при перевірці не враховуватиметься.</div>
+          </div>
+
+          <button type="submit" class="btn btn-success w-100 mt-3">+ Зберегти запитання</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Права колонка: Список уже доданих запитань -->
+  <div class="col-md-7">
+    <h5>Додані запитання (<%= test.questions.length %>)</h5>
+    
+    <% if (test.questions.length === 0) { %>
+      <div class="alert alert-warning">У цьому тесті ще немає запитань. Додайте перше через форму ліворуч.</div>
+    <% } %>
+
+    <% test.questions.forEach((q, index) => { %>
+      <div class="card mb-3 shadow-sm border-0">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <h6 class="fw-bold"><%= index + 1 %>. <%= q.questionText %></h6>
+            <span class="badge bg-secondary"><%= q.points %> бал(и)</span>
+          </div>
+
+          <p class="text-muted small mb-2">
+            Тип: 
+            <% if (q.type === 'single') { %>Одиночний вибір<% } %>
+            <% if (q.type === 'multiple') { %>Множинний вибір<% } %>
+            <% if (q.type === 'text') { %>Текстова відповідь<% } %>
+          </p>
+
+          <% if (q.options && q.options.length > 0) { %>
+            <ul class="list-group list-group-flush small mb-2">
+              <% q.options.forEach(opt => { %>
+                <li class="list-group-item px-0 py-1 <%= q.correctAnswers.includes(opt) ? 'text-success fw-bold' : '' %>">
+                  • <%= opt %> <%= q.correctAnswers.includes(opt) ? '✓ (правильна)' : '' %>
+                </li>
+              <% }) %>
+            </ul>
+          <% } else { %>
+            <div class="small text-success fw-bold">Правильна відповідь: <%= q.correctAnswers.join(', ') %></div>
+          <% } %>
+
+          <form action="/teacher/tests/<%= test._id %>/questions/<%= q._id %>/delete" method="POST" class="text-end mt-2">
+            <button type="submit" class="btn btn-sm btn-outline-danger py-0">Видалити питання</button>
+          </form>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
+<script>
+  function switchQuestionType(type) {
+    const optionsBlock = document.getElementById('optionsBlock');
+    const textBlock = document.getElementById('textBlock');
+    if (type === 'text') {
+      optionsBlock.style.display = 'none';
+      textBlock.style.display = 'block';
+    } else {
+      optionsBlock.style.display = 'block';
+      textBlock.style.display = 'none';
+    }
+  }
+</script>
+
+<%- include('../partials/footer') %>
